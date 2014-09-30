@@ -1,13 +1,11 @@
 OWTF installation script
 ===
 
-To install **OWTF** using cURL:
+To install **OWTF** using Wget:
 
-    curl https://raw.githubusercontent.com/owtf/bootstrap-script/master/bootstrap.sh | bash
+```bash
+wget https://raw.githubusercontent.com/owtf/bootstrap-script/master/bootstrap.sh; chmod +x bootstrap.sh; ./bootstrap.sh
 
-or Wget:
-
-    wget -qO- https://raw.githubusercontent.com/owtf/bootstrap-script/master/bootstrap.sh | bash
-
+```
 
 

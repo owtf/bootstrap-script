@@ -103,6 +103,9 @@ clean_up() {
     rm -f $1
     exit
 }
+pause(){
+   read -p "$*"
+}
 
 # =============================================================
 #  CONSTANTS
@@ -122,13 +125,11 @@ main(){
   check_git
   print_line
   echo -e "${BCyan}The script can be cancelled at any time with CTRL+C \n"
-  echo -e "${BYellow}Select your OWTF version: "
-
-  # options parsing using getopt
+  echo -e  "${BYellow}Select your OWTF version: "
+  # options parsing
   options=("OWTF 1.0 LionHeart beta (bleeding-edge)"
            "Quit"
         )
-
   select opt in "${options[@]}"
   do
       case $opt in
@@ -145,8 +146,6 @@ main(){
           *) echo -e "Invalid option. Try another one."; continue ;;
       esac
   done
-  clean_up $(basename $dev)
 }
-
 
 main

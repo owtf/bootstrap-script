@@ -107,7 +107,7 @@ pause(){
 # =============================================================
 #  CONSTANTS
 # =============================================================
-dev=https://github.com/owtf/owtf/archive/lions_2014.zip
+dev=https://github.com/owtf/owtf.git
 stable=https://github.com/owtf/owtf/archive/v1.0.1.tar.gz
 scriptdir=$(dirname $0)
 
@@ -126,7 +126,7 @@ main(){
   echo -e  "${BYellow}Select your OWTF version: "
   # options parsing
   options=("OWTF 1.0.1 Lionheart"
-           "OWTF 1.0.1 (bleeding-edge)"
+           "OWTF-dev (git)"
            "Quit"
         )
   select opt in "${options[@]}"
@@ -139,11 +139,10 @@ main(){
             mv owtf-1.0.1 owtf/; cd owtf/
             Install
             ;;
-          "OWTF 1.0.1 (bleeding-edge)")
+          "OWTF-dev (git)")
             print_info " Fetching repository and starting installation process"
             print_info " Make sure you have sudo access."
-            wget $dev; unzip $(basename $dev); rm -f $(basename $dev) 2> /dev/null
-            mv owtf-lions_2014/ owtf/; cd owtf/
+            git clone $dev; cd owtf/
             Install
             ;;
           "Quit")

@@ -25,7 +25,7 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-# __author__ = 'Viyat Bhalodia'
+# AUTHOR: 'Viyat Bhalodia'
 
 # =============================================================
 #  COLORS
@@ -126,23 +126,30 @@ main(){
   echo -e  "${BYellow}Select your OWTF version: "
   # options parsing
   options=("OWTF 1.0.1 Lionheart"
-           "OWTF-dev (git)"
+           "OWTF master branch"
+           "OWTF develop branch"
            "Quit"
         )
   select opt in "${options[@]}"
   do
       case $opt in
           "OWTF 1.0.1 Lionheart")
-            print_info " Fetching the source code and starting installation process"
+            print_info " Fetching the source code and starting installation process.."
             print_info " Make sure you have sudo access."
             wget $stable; tar xvf $(basename $stable); rm -f $(basename $stable) 2> /dev/null
             mv owtf-1.0.1 owtf/; cd owtf/
             Install
             ;;
-          "OWTF-dev (git)")
-            print_info " Fetching repository and starting installation process"
+          "OWTF master branch")
+            print_info " Fetching repository and starting installation process.."
             print_info " Make sure you have sudo access."
             git clone $dev; cd owtf/
+            Install
+            ;;
+          "OWTF develop branch")
+            print_info " Fetching repository and starting installation process.."
+            print_info " Make sure you have sudo access."
+            git clone -b develop $dev; cd owtf/
             Install
             ;;
           "Quit")

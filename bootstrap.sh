@@ -143,7 +143,7 @@ main(){
           "OWTF master branch")
             print_info " Fetching repository and starting installation process.."
             print_info " Make sure you have sudo access."
-            git clone $dev; cd owtf/
+            git clone -b master $dev; cd owtf/
             Install
             ;;
           "OWTF develop branch")

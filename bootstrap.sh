@@ -108,7 +108,7 @@ pause(){
 #  CONSTANTS
 # =============================================================
 dev=https://github.com/owtf/owtf.git
-stable=https://github.com/owtf/owtf/archive/v1.0.1.tar.gz
+latest_release=https://github.com/owtf/owtf/archive/v1.0.1.tar.gz
 scriptdir=$(dirname $0)
 
 
@@ -126,7 +126,6 @@ main(){
   echo -e  "${BYellow}Select your OWTF version: "
   # options parsing
   options=("OWTF 1.0.1 Lionheart"
-           "OWTF master branch"
            "OWTF develop branch"
            "Quit"
         )
@@ -136,14 +135,8 @@ main(){
           "OWTF 1.0.1 Lionheart")
             print_info " Fetching the source code and starting installation process.."
             print_info " Make sure you have sudo access."
-            wget $stable; tar xvf $(basename $stable); rm -f $(basename $stable) 2> /dev/null
+            wget $latest_release; tar xvf $(basename $latest_release); rm -f $(basename $latest_release) 2> /dev/null
             mv owtf-1.0.1 owtf/; cd owtf/
-            Install
-            ;;
-          "OWTF master branch")
-            print_info " Fetching repository and starting installation process.."
-            print_info " Make sure you have sudo access."
-            git clone -b master $dev; cd owtf/
             Install
             ;;
           "OWTF develop branch")

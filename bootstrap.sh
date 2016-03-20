@@ -138,12 +138,14 @@ main(){
             wget $latest_release; tar xvf $(basename $latest_release); rm -f $(basename $latest_release) 2> /dev/null
             mv owtf-1.0.1 owtf/; cd owtf/
             Install
+            break
             ;;
           "OWTF develop branch")
             print_info " Fetching repository and starting installation process.."
             print_info " Make sure you have sudo access."
             git clone -b develop $dev; cd owtf/
             Install
+            break
             ;;
           "Quit")
               break

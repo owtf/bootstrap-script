@@ -148,8 +148,8 @@ main(){
             break
             ;;
           "Quit")
-              break
-              ;;
+            break
+            ;;
           *) echo -e "Invalid option. Try another one."; continue ;;
       esac
   done

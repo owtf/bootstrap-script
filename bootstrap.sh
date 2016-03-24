@@ -59,6 +59,11 @@ BWhite=${Bold}$(tput setaf 7)
 print_line() {
   printf "%$(tput cols)s\n"|tr ' ' '*'
 }
+
+prompt_sudo() {
+  [ "$UID" -eq 0 ] || exec sudo bash "$0" "$@"
+}
+
 print_title() {
   clear
   print_line
@@ -66,19 +71,23 @@ print_title() {
   print_line
   echo ""
 }
+
 print_info() {
   #Console width number
   T_COLS=`tput cols`
   echo -e "${Bold}$1${Reset}\n" | fold -sw $(( $T_COLS - 18 )) | sed 's/^/\t/'
 }
+
 print_warning() {
   T_COLS=`tput cols`
   echo -e "${BYellow}$1${Reset}\n" | fold -sw $(( $T_COLS - 1 ))
 }
+
 print_danger() {
   T_COLS=`tput cols`
   echo -e "${BRed}$1${Reset}\n" | fold -sw $(( $T_COLS - 1 ))
 }
+
 check_git() {
   #Depending on the return value $? you can assume git is installed or not.
   #If you get 0 everything is fine otherwise git is not installed. You can also test this.
@@ -91,17 +100,20 @@ check_git() {
     exit 1
   fi
 }
+
 Install() {
   cd install/; python2 install.py
 }
+
 clean_up() {
-    # Perform program exit housekeeping
-    # Optionally accepts an exit status
-    rm -f $1
-    exit
+  # Perform program exit housekeeping
+  # Optionally accepts an exit status
+  rm -f $1
+  exit
 }
+
 pause(){
-   read -p "$*"
+  read -p "$*"
 }
 
 # =============================================================
@@ -111,7 +123,6 @@ dev=https://github.com/owtf/owtf.git
 latest_release=https://github.com/owtf/owtf/archive/v1.0.1.tar.gz
 scriptdir=$(dirname $0)
 
-
 # =============================================================
 #  START OF THE MAIN SCRIPT
 # =============================================================
@@ -119,39 +130,40 @@ scriptdir=$(dirname $0)
 main(){
   clear
   print_title "${BWhite}Welcome to the OWTF quick installation\n"
-  print_warning " OWTF requires minimum of 60 MiB space for a minimal installation, please make sure you have enough space on your partition."
+  print_warning " OWTF requires minimum of 60 MiB space for a minimal installation and sudo access, please make sure you have enough space on your partition."
   check_git
+  prompt_sudo
   print_line
   echo -e "${BCyan}The script can be cancelled at any time with CTRL+C \n"
   echo -e  "${BYellow}Select your OWTF version: "
   # options parsing
   options=("OWTF 1.0.1 Lionheart"
-           "OWTF develop branch"
-           "Quit"
-        )
+    "OWTF develop branch"
+    "Quit"
+  )
   select opt in "${options[@]}"
   do
-      case $opt in
-          "OWTF 1.0.1 Lionheart")
-            print_info " Fetching the source code and starting installation process.."
-            print_info " Make sure you have sudo access."
-            wget $latest_release; tar xvf $(basename $latest_release); rm -f $(basename $latest_release) 2> /dev/null
-            mv owtf-1.0.1 owtf/; cd owtf/
-            Install
-            break
-            ;;
-          "OWTF develop branch")
-            print_info " Fetching repository and starting installation process.."
-            print_info " Make sure you have sudo access."
-            git clone -b develop $dev; cd owtf/
-            Install
-            break
-            ;;
-          "Quit")
-            break
-            ;;
-          *) echo -e "Invalid option. Try another one."; continue ;;
-      esac
+    case $opt in
+      "OWTF 1.0.1 Lionheart")
+        print_info " Fetching the source code and starting installation process.."
+        wget $latest_release; tar xvf $(basename $latest_release); rm -f $(basename $latest_release) 2> /dev/null
+        mv owtf-1.0.1 owtf/; cd owtf/
+        Install
+        break
+      ;;
+      "OWTF develop branch")
+        print_info " Fetching repository and starting installation process.."
+        git clone -b develop $dev; cd owtf/
+        Install
+        break
+      ;;
+      "Quit")
+        print_info " If you wish to install OWTF later, please run this script again.."
+        break
+      ;;
+      *) 
+        echo -e " Invalid option. Try again."; continue ;;
+    esac
   done
 }
 

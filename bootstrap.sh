@@ -120,7 +120,7 @@ pause(){
 #  CONSTANTS
 # =============================================================
 dev=https://github.com/owtf/owtf.git
-latest_release=https://github.com/owtf/owtf/archive/v1.0.1.tar.gz
+latest_release=https://github.com/owtf/owtf/archive/v2.0a.tar.gz
 scriptdir=$(dirname $0)
 
 # =============================================================
@@ -137,14 +137,14 @@ main(){
   echo -e "${BCyan}The script can be cancelled at any time with CTRL+C \n"
   echo -e  "${BYellow}Select your OWTF version: "
   # options parsing
-  options=("OWTF 1.0.1 Lionheart"
+  options=("OWTF 2.0a Tikka Masala"
     "OWTF develop branch"
     "Quit"
   )
   select opt in "${options[@]}"
   do
     case $opt in
-      "OWTF 1.0.1 Lionheart")
+      "OWTF 2.0a Tikka Masala")
         print_info " Fetching the source code and starting installation process.."
         wget $latest_release; tar xvf $(basename $latest_release); rm -f $(basename $latest_release) 2> /dev/null
         mv owtf-1.0.1 owtf/; cd owtf/
@@ -161,7 +161,7 @@ main(){
         print_info " If you wish to install OWTF later, please run this script again.."
         break
       ;;
-      *) 
+      *)
         echo -e " Invalid option. Try again."; continue ;;
     esac
   done

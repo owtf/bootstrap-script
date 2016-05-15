@@ -147,7 +147,7 @@ main(){
       "OWTF 2.0a Tikka Masala")
         print_info " Fetching the source code and starting installation process.."
         wget $latest_release; tar xvf $(basename $latest_release); rm -f $(basename $latest_release) 2> /dev/null
-        mv owtf-1.0.1 owtf/; cd owtf/
+        mv owtf-2.0a owtf/; cd owtf/
         Install
         break
       ;;

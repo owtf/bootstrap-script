@@ -1,30 +1,4 @@
 #!/bin/bash
-# owtf is an OWASP+PTES-focused try to unite great tools and facilitate pen testing
-# Copyright (c) 2014, Abraham Aranguren <name.surname@gmail.com> Twitter: @7a_ http://7-a.org
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions are met:
-# * Redistributions of source code must retain the above copyright
-# notice, this list of conditions and the following disclaimer.
-# * Redistributions in binary form must reproduce the above copyright
-# notice, this list of conditions and the following disclaimer in the
-# documentation and/or other materials provided with the distribution.
-# * Neither the name of the <organization> nor the
-# names of its contributors may be used to endorse or promote products
-# derived from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-# ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-# WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-# DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> BE LIABLE FOR ANY
-# DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-# (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-# LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
-# ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-# SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
 # AUTHOR: 'Viyat Bhalodia'
 
 # =============================================================
@@ -102,7 +76,7 @@ check_git() {
 }
 
 Install() {
-  cd install/; python2 install.py
+  python install/install.py
 }
 
 clean_up() {
@@ -120,7 +94,8 @@ pause(){
 #  CONSTANTS
 # =============================================================
 dev=https://github.com/owtf/owtf.git
-latest_release=https://github.com/owtf/owtf/archive/v2.0a.tar.gz
+latest_release=https://github.com/owtf/owtf/archive/v2.1a.tar.gz
+tikka_masala=https://github.com/owtf/owtf/archive/v2.0a.tar.gz
 scriptdir=$(dirname $0)
 
 # =============================================================
@@ -137,16 +112,24 @@ main(){
   echo -e "${BCyan}The script can be cancelled at any time with CTRL+C \n"
   echo -e  "${BYellow}Select your OWTF version: "
   # options parsing
-  options=("OWTF 2.0a Tikka Masala"
+  options=("OWTF 2.1a Chicken Korma"
+    "OWTF 2.0a Tikka Masala"
     "OWTF develop branch"
     "Quit"
   )
   select opt in "${options[@]}"
   do
     case $opt in
-      "OWTF 2.0a Tikka Masala")
+      "OWTF 2.1a Chicken Korma")
         print_info " Fetching the source code and starting installation process.."
         wget $latest_release; tar xvf $(basename $latest_release); rm -f $(basename $latest_release) 2> /dev/null
+        mv owtf-2.1a owtf/; cd owtf/
+        Install
+        break
+      ;;
+      "OWTF 2.0a Tikka Masala")
+        print_info " Fetching the source code and starting installation process.."
+        wget $tikka_masala; tar xvf $(basename $tikka_masala); rm -f $(basename $tikka_masala) 2> /dev/null
         mv owtf-2.0a owtf/; cd owtf/
         Install
         break

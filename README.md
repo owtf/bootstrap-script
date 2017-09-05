@@ -1,4 +1,4 @@
-OWTF installation script
+[NOW DEPRECATED] OWTF installation script
 ===
 
 To install OWTF using wget:
